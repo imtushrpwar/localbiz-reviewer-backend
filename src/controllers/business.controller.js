@@ -61,7 +61,7 @@ const createBusiness = async (req, res) => {
     }
 
     // Review URL
-    const reviewURL = `http://192.168.1.2:3000/review/${slug}`;
+    const reviewURL =`https://customer-review-app-five.vercel.app/review/${slug}`;
 
     // Generate QR
     const qrCode = await QRCode.toDataURL(reviewURL);
