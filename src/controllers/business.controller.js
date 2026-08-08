@@ -134,57 +134,55 @@ const getBusiness = async (req, res) => {
 // Update Business
 
 const updateBusiness = async (req, res) => {
+  try {
+    const business = await Business.findOne({
+      owner: req.user.id,
+    });
 
-    try {
-
-        const business = await Business.findOne({
-            owner:req.user.id
-        });
-
-        if(!business){
-
-            return res.status(404).json({
-                success:false,
-                message:"Business not found"
-            });
-
-        }
-
-        business.phone = req.body.phone || business.phone;
-
-        business.email = req.body.email || business.email;
-
-        business.address = req.body.address || business.address;
-
-        business.description = req.body.description || business.description;
-
-        await business.save();
-
-        res.status(200).json({
-
-            success:true,
-
-            message:"Business Updated",
-
-            business
-
-        });
-
-    } catch (error) {
-
-        console.log(error);
-
-        res.status(500).json({
-
-            success:false,
-
-            message:"Server Error"
-
-        });
-
+    if (!business) {
+      return res.status(404).json({
+        success: false,
+        message: "Business not found",
+      });
     }
 
-}
+    business.businessName =
+      req.body.businessName || business.businessName;
+
+    business.category =
+      req.body.category || business.category;
+
+    business.phone =
+      req.body.phone || business.phone;
+
+    business.email =
+      req.body.email || business.email;
+
+    business.address =
+      req.body.address || business.address;
+
+    business.city =
+      req.body.city || business.city;
+
+    business.description =
+      req.body.description || business.description;
+
+    await business.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Business updated successfully",
+      business,
+    });
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
 
 const checkBusiness = async (req, res) => {
   try {
